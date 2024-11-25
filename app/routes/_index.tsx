@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,8 +10,24 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <h1 className="text-[32px] font-bold">This is my first J🤪KES application with remixJs.</h1>
+    <div className="container">
+      <div className="content ">
+        <div className=" mt-[20px] text-center ">
+          <h1 className="text-[32px] font-bold">
+            This is my first RemixJs J🤪KES Application!
+          </h1>
+        </div>
+        <div className="flex justify-center items-center mt-[100px]">
+          <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 out">
+            <Link to="jokes" className="text-[25px] font-bold">Go to <span className="text-[30px]">👉</span> Read Jokes</Link>
+          </button>
+        </div>
+        <div className="flex justify-center items-center mt-[100px]">
+          <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+            <Link reloadDocument to="/jokes.rss" className="text-[25px] font-bold">Go to <span className="text-[30px]">👉</span> RSS</Link>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
