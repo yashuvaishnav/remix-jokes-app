@@ -8,14 +8,14 @@ import { createUserSession, login, register } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
     const description =
-      "Login to submit your own jokes to Remix Jokes!";
-  
+        "Login to submit your own jokes to Remix Jokes!";
+
     return [
-      { name: "description", content: description },
-      { name: "twitter:description", content: description },
-      { title: "Remix Jokes | Login" },
+        { name: "description", content: description },
+        { name: "twitter:description", content: description },
+        { title: "Remix Jokes | Login" },
     ];
-  }
+}
 
 function validateUsername(username: string) {
     if (username.length < 3) {
@@ -124,31 +124,32 @@ const Login = () => {
     const [searchParams] = useSearchParams();
     return (
 
-        <div className="flex flex-col items-center justify-center pt-[50px]">
-            <div className=" mb-[30px] flex justify-between w-[24%] border-2 ">
-                <Link to="/" className="hover:underline text-blue-400">Home</Link>
-                <Link to="/jokes" className="hover:underline text-blue-400">Jokes</Link>
+        <div className="flex flex-col items-center justify-center">
+            <div className=" mb-[20px] flex justify-around  border-2 bg-blue-800 w-[100%] py-[15px]">
+                <Link to="/" className="text-[20px] font-bold py-[5px] flex items-center justify-center border-2 px-[20px] rounded-md text-center text-lg  text-white border-2 rounded-md shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none">Home</Link>
+                <Link to="/jokes" className="text-[20px] font-bold py-[5px] flex items-center justify-center border-2 px-[20px] rounded-md text-center text-lg  text-white border-2 rounded-md shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none">Jokes</Link>
+
             </div>
-            <div className="p-4 rounded-md shadow-md border-t border-gray-2   00">
-                <h1 className="text-center text-xl font-bold  text-[32px] p-[10px]">Login</h1>
-                <Form method="post" className="">
+            <div className="p-6 rounded-xl w-[30%] bg-gray-100  border-gray-2 ">
+                <h1 className="text-center font-bold text-[32px] p-[10px] text-blue-500">Login</h1>
+                <Form method="post" className="w-[90%] m-auto">
                     <input
                         type="hidden"
                         name="redirectTo"
                         value={searchParams.get("redirectTo") ?? ""}
                     />
-                    <fieldset className="flex justify-center mt-4">
+                    <fieldset className="my-[10px]  px-[20px]">
                         <legend className="sr-only">
                             Login or Register?
                         </legend>
-                        <div className="flex justify-between w-[60%]" >
-                            <label>
-                                <input type="radio" name="loginType" value="login" defaultChecked={
+                        <div className="flex justify-between">
+                            <label className="text-[18px] font-bold">
+                                <input type="radio" name="loginType" value="login" className="pr-[5px]" defaultChecked={
                                     !actionData?.fields?.loginType ||
                                     actionData?.fields?.loginType === "login"
                                 } /> Login
                             </label>
-                            <label>
+                            <label className="text-[18px] font-bold">
                                 <input type="radio" name="loginType" value="register" className="font-[25px]" defaultChecked={
                                     actionData?.fields?.loginType ===
                                     "register"
@@ -156,9 +157,9 @@ const Login = () => {
                             </label>
                         </div>
                     </fieldset>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col ">
                         <label className="text-[22px] font-bold my-[10px] ">Username</label>
-                        <input type="text" id="username-input" name="username" placeholder="User Name" className="p-[8px] pl-[10px] border outline-none rounded-md" defaultValue={actionData?.fields?.username}
+                        <input type="text" id="username-input" name="username" placeholder="User Name" className="p-[8px] hover:outline-blue-500 pl-[10px] outline-none rounded-md" defaultValue={actionData?.fields?.username}
                             aria-invalid={Boolean(
                                 actionData?.fieldErrors?.username
                             )}
@@ -178,7 +179,7 @@ const Login = () => {
                     </div>
                     <div className="flex flex-col ">
                         <label className="text-[22spx] font-bold my-[10px] ">Password</label>
-                        <input id="password-input" name="password" placeholder="Password" type="password" className="p-[8px] pl-[10px] border outline-none rounded-md" defaultValue={actionData?.fields?.password}
+                        <input id="password-input" name="password" placeholder="Password" type="password" className="p-[8px] pl-[10px] hover:outline-blue-500 outline-none rounded-md" defaultValue={actionData?.fields?.password}
                             aria-invalid={Boolean(
                                 actionData?.fieldErrors?.password
                             )}
@@ -196,7 +197,7 @@ const Login = () => {
                                 </p>
                             ) : null}
                     </div>
-                    <div className="flex justify-center mt-[10px] ">
+                    <div className="flex mt-[15px] ">
                         <div id="form-error-message">
                             {actionData?.formError ? (
                                 <p
@@ -207,7 +208,7 @@ const Login = () => {
                                 </p>
                             ) : null}
                         </div>
-                        <button className="px-6 py-2 border outline-none bg-blue-400 text-white font-bold rounded-md">Submit</button>
+                        <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 mt-[10px]">Submit</button>
                     </div>
                 </Form>
             </div>
