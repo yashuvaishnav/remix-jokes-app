@@ -61,7 +61,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 const AddJokes = () => {
   const actionData = useActionData<typeof action>();
   return (
-    <div>
+    <div className="">
       <h1 className="text-[32px] text-gray-400 font-bold">Add Jokes</h1>
       <Form method="post">
         <div className="space-y-4">

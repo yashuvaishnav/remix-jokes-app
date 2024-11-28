@@ -2,6 +2,7 @@
 import { MetaFunction } from "@remix-run/node";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
+import { useState } from "react";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
 import { createUserSession, login, register } from "~/utils/session.server";
@@ -19,13 +20,13 @@ export const meta: MetaFunction = () => {
 
 function validateUsername(username: string) {
     if (username.length < 3) {
-        return "Usernames must be at least 3 characters long";
+        return "Username should be 3 characters long";
     }
 }
 
 function validatePassword(password: string) {
     if (password.length < 6) {
-        return "Passwords must be at least 6 characters long";
+        return "Password should be 6 characters long";
     }
 }
 function validateUrl(url: string) {
@@ -35,6 +36,7 @@ function validateUrl(url: string) {
     }
     return "/jokes";
 }
+
 
 export const action = async ({
     request,
@@ -122,16 +124,24 @@ export const action = async ({
 const Login = () => {
     const actionData = useActionData<typeof action>();
     const [searchParams] = useSearchParams();
+    const [loginType, setLoginType] = useState('login');
+  
+    const handleLoginTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginType(event.target.value); // Ensure the value is one of 'login' or 'register'
+      };
+
+      console.log("logintype value ",loginType)
     return (
 
         <div className="flex flex-col items-center justify-center">
             <div className=" mb-[20px] flex justify-around  border-2 bg-blue-800 w-[100%] py-[15px]">
                 <Link to="/" className="text-[20px] font-bold py-[5px] flex items-center justify-center border-2 px-[20px] rounded-md text-center text-lg  text-white border-2 rounded-md shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none">Home</Link>
                 <Link to="/jokes" className="text-[20px] font-bold py-[5px] flex items-center justify-center border-2 px-[20px] rounded-md text-center text-lg  text-white border-2 rounded-md shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none">Jokes</Link>
-
             </div>
-            <div className="p-6 rounded-xl w-[30%] bg-gray-100  border-gray-2 ">
-                <h1 className="text-center font-bold text-[32px] p-[10px] text-blue-500">Login</h1>
+            <div className="p-6 rounded-xl w-[30%] bg-gray-100 ">
+                <h1 className="text-center font-bold text-[32px] text-blue-800">
+                    {loginType === "login" ? 'Login' : 'Register'}
+                </h1>
                 <Form method="post" className="w-[90%] m-auto">
                     <input
                         type="hidden"
@@ -144,13 +154,19 @@ const Login = () => {
                         </legend>
                         <div className="flex justify-between">
                             <label className="text-[18px] font-bold">
-                                <input type="radio" name="loginType" value="login" className="pr-[5px]" defaultChecked={
-                                    !actionData?.fields?.loginType ||
-                                    actionData?.fields?.loginType === "login"
-                                } /> Login
+                                <input type="radio" name="loginType" value="login" className="pr-[5px]"
+                                    checked={loginType === 'login'}
+                                    onChange={handleLoginTypeChange}
+                                    defaultChecked={
+                                        !actionData?.fields?.loginType ||
+                                        actionData?.fields?.loginType === "login"
+                                    } /> Login
                             </label>
                             <label className="text-[18px] font-bold">
-                                <input type="radio" name="loginType" value="register" className="font-[25px]" defaultChecked={
+                                <input type="radio" name="loginType" value="register" className="font-[25px]"
+                                checked={loginType === 'register'}
+                                onChange={handleLoginTypeChange}
+                                 defaultChecked={
                                     actionData?.fields?.loginType ===
                                     "register"
                                 } /> Register
@@ -158,7 +174,7 @@ const Login = () => {
                         </div>
                     </fieldset>
                     <div className="flex flex-col ">
-                        <label className="text-[22px] font-bold my-[10px] ">Username</label>
+                        <label className="font-bold my-[10px] ">Username</label>
                         <input type="text" id="username-input" name="username" placeholder="User Name" className="p-[8px] hover:outline-blue-500 pl-[10px] outline-none rounded-md" defaultValue={actionData?.fields?.username}
                             aria-invalid={Boolean(
                                 actionData?.fieldErrors?.username
@@ -169,7 +185,7 @@ const Login = () => {
                                     : undefined
                             } />{actionData?.fieldErrors?.username ? (
                                 <p
-                                    className="form-validation-error text-red-500 "
+                                    className="form-validation-error text-red-500 mt-[6px]"
                                     role="alert"
                                     id="username-error"
                                 >
@@ -189,7 +205,7 @@ const Login = () => {
                                     : undefined
                             } />{actionData?.fieldErrors?.password ? (
                                 <p
-                                    className="form-validation-error text-red-500 "
+                                    className="form-validation-error text-red-500 mt-[6px]"
                                     role="alert"
                                     id="password-error"
                                 >
@@ -197,24 +213,22 @@ const Login = () => {
                                 </p>
                             ) : null}
                     </div>
-                    <div className="flex mt-[15px] ">
-                        <div id="form-error-message">
+                    <div className="flex flex-col mt-[15px] ">
+                        <div id="form-error-message" className="">
                             {actionData?.formError ? (
                                 <p
-                                    className="form-validation-error"
+                                    className="form-validation-error text-red-500"
                                     role="alert"
                                 >
                                     {actionData.formError}
                                 </p>
                             ) : null}
                         </div>
-                        <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 mt-[10px]">Submit</button>
+                        <button className="bg-blue-800 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 mt-[10px]">{loginType === "login" ? "Login" : "Register"}</button>
                     </div>
                 </Form>
             </div>
         </div>
-
-
     );
 }
 

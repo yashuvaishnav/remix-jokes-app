@@ -39,7 +39,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const form = await request.formData();
-  console.log("form data::", form)
 
   const name = form.get('name') as string;
   const content = form.get('content') as string;
@@ -87,16 +86,14 @@ const SingleJoke = () => {
   const { joke, isOwner } = useLoaderData<typeof loader>();
   const [edit, setEdit] = useState(false);
   return (
-    <div>
-      <h2 className="text-[32px] font-bold ">Single Blog</h2>
+    <div className="">
+      <h2 className="text-[32px] text-gray-400 font-bold">Single Blog</h2>
       <div className="p-4 border rounded-lg shadow-md bg-white mt-[20px]">
         {joke ? (
           <>
-            <Link to={"."}>
               <h1 className="text-2xl font-semibold text-gray-800 mb-2">
                 Name: {joke.name}
               </h1>
-            </Link>
             <p className="text-gray-700">{joke.content}</p>
           </>
         ) : (
