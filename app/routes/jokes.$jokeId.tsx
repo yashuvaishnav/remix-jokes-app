@@ -4,7 +4,6 @@ import { json, Link, useLoaderData, useParams, isRouteErrorResponse, useRouteErr
 import { useState } from "react";
 import { db } from "~/utils/db.server";
 import { getUserId, requireUserId } from "~/utils/session.server";
-import { JokeDisplay } from "~/components/joke";
 
 export const meta: MetaFunction<typeof loader> = ({
   data,
@@ -88,28 +87,28 @@ const SingleJoke = () => {
   return (
     <div className="">
       <h2 className="text-[32px] text-gray-400 font-bold">Single Blog</h2>
-      <div className="p-4 border rounded-lg shadow-md bg-white mt-[20px]">
+      <div className="p-5 border bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 rounded-lg shadow-md bg-white mt-[20px]">
         {joke ? (
           <>
-              <h1 className="text-2xl font-semibold text-gray-800 mb-2">
-                Name: {joke.name}
+              <h1 className="text-2xl font-semibold text-white mb-2">
+                {joke.name}
               </h1>
-            <p className="text-gray-700">{joke.content}</p>
+            <p className="text-white">{joke.content}</p>
           </>
         ) : (
           <p className="text-gray-500 italic">Loading...</p>
         )}
         {isOwner ? (
-          <>
+          <div className="flex mt-[10px] justify-between">
             <Form method="post">
-              <button
+              {!edit ? <button
                 className="bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                 name="intent"
                 type="submit"
                 value="delete"
               >
                 Delete
-              </button>
+              </button> : null}
             </Form>
             {edit && (
               <Form method="POST">
@@ -124,14 +123,8 @@ const SingleJoke = () => {
                 </span>
               </Form>
             )}
-            <button type="submit" onClick={() => setEdit(true)}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-              </svg>
-
-            </button>
-
-          </>
+            {!edit ? <button type="submit" className="bg-green-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" onClick={() => setEdit(true)}>Edit</button> : "" }
+          </div>
         ) : null}
       </div>
     </div>

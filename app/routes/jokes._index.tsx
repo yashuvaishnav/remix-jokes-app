@@ -24,12 +24,12 @@ const JokesIndexRoute = () => {
   return (
     <div>
         <h1 className="text-[32px] font-semibold text-gray-400 mb-[10px]">Here's a random joke:</h1>
-      <div className="flex justify-center items-center bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 rounded-xl">
-        <div className="flex flex-col space-y-6 mt-[30px] mx-4 sm:mx-8 lg:mx-12  rounded-lg p-6   ">
-          <p className="text-lg text-white">{data.randomJoke.content}</p>
-          <Link to={data.randomJoke.id} className="text-gray-800 hover:text-blue-800 font-semibold transition-colors duration-300 ease-in-out">
-            "{data.randomJoke.name}" Permalink
+      <div className="flex  justify-center items-center bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 rounded-xl">
+        <div className="flex flex-col mx-4 sm:mx-8 lg:mx-12  rounded-lg p-6">
+          <Link to={data.randomJoke.id} className="text-gray-800 text-[20px] hover:text-blue-800 font-semibold transition-colors duration-300 ease-in-out">
+            👉 "{data.randomJoke.name}" Permalink
           </Link>
+          <p className="text-lg text-white">{data.randomJoke.content}</p>
         </div>
       </div>
     </div>

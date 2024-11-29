@@ -8,3 +8,4 @@ export const action = async ({
 }: ActionFunctionArgs) => logout(request);
 
 export const loader = async () => redirect("/");
+
